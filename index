@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅のしおり</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #0056b3;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #ffffff;
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+            cursor: pointer; /* ポインターを手の形に */
+        }
+        li:hover {
+            background-color: #e6f7ff;
+        }
+        .hidden {
+            color: gray;
+        }
+        .details {
+            display: none; /* デフォルトで詳細を非表示 */
+            margin-top: 10px;
+            padding: 10px;
+            border-left: 4px solid #0056b3; /* 左側のボーダー */
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>旅のしおり</h1>
+    <ul id="schedule">
+        <!-- イベントが動的に追加されます -->
+    </ul>
+
+    <script>
+        // イベントのデータを定義
+        const events = [
+            { name: "出発", startTime: new Date("2024-10-31T12:00:00"), details: "空港へ向かいます。" },
+            { name: "昼食", startTime: new Date("2024-10-31T12:10:00"), details: "近くのレストランで昼食。" },
+            { name: "観光スポット訪問", startTime: new Date("2024-10-31T15:00:00"), details: "有名な観光地を見学。" },
+            { name: "ホテルチェックイン", startTime: new Date("2024-10-31T16:00:00"), details: "ホテルにチェックインします。" },
+            { name: "夕食", startTime: new Date("2024-10-31T19:00:00"), details: "地元の料理を楽しむ。" },
+            { name: "夜の散策", startTime: new Date("2024-10-31T20:30:00"), details: "街を散策します。" }
+        ];
+
+        // 日付を"HH:MM"形式にフォーマットする関数
+        function formatTime(date) {
+            return date.toTimeString().slice(0, 5);
+        }
+
+        // スケジュールの表示更新
+        function updateSchedule() {
+            const scheduleElement = document.getElementById("schedule");
+            scheduleElement.innerHTML = ""; // 一度クリア
+
+            events.forEach(event => {
+                const listItem = document.createElement("li");
+
+                // イベントが表示されるべき時間か判定
+                const fifteenMinutesBefore = new Date(event.startTime.getTime() - 15 * 60 * 1000);
+                const timeText = formatTime(event.startTime); // 時間部分をフォーマット
+
+                // 15分前まで内容を?????で隠す
+                if (new Date() >= fifteenMinutesBefore) {
+                    listItem.textContent = `${timeText} - ${event.name}`;
+                } else {
+                    listItem.textContent = `${timeText} - ?????`;
+                    listItem.classList.add("hidden");
+                }
+
+                // 詳細表示のための要素
+                const detailsDiv = document.createElement("div");
+                detailsDiv.classList.add("details");
+                detailsDiv.textContent = event.details;
+
+                // リストアイテムのクリックイベント
+                listItem.addEventListener("click", () => {
+                    detailsDiv.style.display = detailsDiv.style.display === "none" ? "block" : "none";
+                });
+
+                scheduleElement.appendChild(listItem);
+                scheduleElement.appendChild(detailsDiv); // 詳細部分を追加
+            });
+        }
+
+        // 初回の表示
+        updateSchedule();
+
+        // 1分ごとに表示を更新
+        setInterval(updateSchedule, 60000);
+    </script>
+</body>
+</html>
