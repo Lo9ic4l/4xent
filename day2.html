@@ -5,7 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2日目の旅のしおり</title>
     <style>
-        /* 前回のスタイル設定と同じ内容 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f2e8;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #4a90e2;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #ffffff;
+            margin: 15px 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        li.locked {
+            cursor: not-allowed;
+            color: #888;
+        }
+        li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        .time {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #4a90e2;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .time-icon {
+            background-color: #4a90e2;
+            color: #fff;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            font-size: 0.9em;
+        }
+        .event-name {
+            font-size: 1.1em;
+            flex-grow: 1;
+        }
+        .hidden {
+            color: #aaa;
+        }
+        .details {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-left: 4px solid #4a90e2;
+            background-color: #f5f5f5;
+            border-radius: 0 0 12px 12px;
+            transition: max-height 0.5s ease-in-out;
+        }
+        /* 1日目リンク */
+        .previous-day {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #4a90e2;
+            border: 1px solid #4a90e2;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .previous-day:hover {
+            background-color: #4a90e2;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
