@@ -6,15 +6,17 @@
     <title>旅のしおり</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f2e8;
             color: #333;
             margin: 0;
             padding: 20px;
         }
         h1 {
             text-align: center;
-            color: #0056b3;
+            color: #4a90e2;
+            font-size: 2em;
+            margin-bottom: 20px;
         }
         ul {
             list-style-type: none;
@@ -22,28 +24,58 @@
         }
         li {
             background-color: #ffffff;
-            margin: 10px 0;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color 0.3s;
-            cursor: pointer; /* ポインターを手の形に */
+            margin: 15px 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        li.locked {
+            cursor: not-allowed;
+            color: #888;
         }
         li:hover {
-            background-color: #e6f7ff;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        .time {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #4a90e2;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .time-icon {
+            background-color: #4a90e2;
+            color: #fff;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            font-size: 0.9em;
+        }
+        .event-name {
+            font-size: 1.1em;
+            flex-grow: 1;
         }
         .hidden {
-            color: gray;
+            color: #aaa;
         }
         .details {
-            display: none; /* デフォルトで詳細を非表示 */
-            margin-top: 10px;
-            padding: 10px;
-            border-left: 4px solid #0056b3; /* 左側のボーダー */
-            background-color: #f9f9f9;
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-left: 4px solid #4a90e2;
+            background-color: #f5f5f5;
+            border-radius: 0 0 12px 12px;
+            transition: max-height 0.5s ease-in-out;
         }
     </style>
 </head>
@@ -54,14 +86,14 @@
     </ul>
 
     <script>
-        // イベントのデータを定義
+        // イベントのデータを定義（すべて2024年12月1日）
         const events = [
-            { name: "出発", startTime: new Date("2024-10-31T12:00:00"), details: "空港へ向かいます。" },
-            { name: "昼食", startTime: new Date("2024-10-31T12:10:00"), details: "近くのレストランで昼食。" },
-            { name: "観光スポット訪問", startTime: new Date("2024-10-31T15:00:00"), details: "有名な観光地を見学。" },
-            { name: "ホテルチェックイン", startTime: new Date("2024-10-31T16:00:00"), details: "ホテルにチェックインします。" },
-            { name: "夕食", startTime: new Date("2024-10-31T19:00:00"), details: "地元の料理を楽しむ。" },
-            { name: "夜の散策", startTime: new Date("2024-10-31T20:30:00"), details: "街を散策します。" }
+            { name: "出発", startTime: new Date("2024-12-01T12:00:00"), details: "空港へ向かいます。" },
+            { name: "昼食 - ?????", startTime: new Date("2024-12-01T12:10:00"), details: "近くのレストランで昼食。" },
+            { name: "観光スポット訪問 - ?????", startTime: new Date("2024-12-01T15:00:00"), details: "有名な観光地を見学。" },
+            { name: "ホテルチェックイン", startTime: new Date("2024-12-01T16:00:00"), details: "ホテルにチェックインします。" },
+            { name: "夕食 - ?????", startTime: new Date("2024-12-01T19:00:00"), details: "地元の料理を楽しむ。" },
+            { name: "夜の散策", startTime: new Date("2024-12-01T20:30:00"), details: "街を散策します。" }
         ];
 
         // 日付を"HH:MM"形式にフォーマットする関数
@@ -76,17 +108,25 @@
 
             events.forEach(event => {
                 const listItem = document.createElement("li");
-
-                // イベントが表示されるべき時間か判定
                 const fifteenMinutesBefore = new Date(event.startTime.getTime() - 15 * 60 * 1000);
-                const timeText = formatTime(event.startTime); // 時間部分をフォーマット
+                const timeText = formatTime(event.startTime);
 
-                // 15分前まで内容を?????で隠す
+                // タイムアイコンと時間表示
+                const timeContainer = document.createElement("div");
+                timeContainer.classList.add("time");
+                timeContainer.innerHTML = `<span class="time-icon">⏰</span>${timeText}`;
+
+                // イベント名と????の表示
+                const eventName = document.createElement("div");
+                eventName.classList.add("event-name");
                 if (new Date() >= fifteenMinutesBefore) {
-                    listItem.textContent = `${timeText} - ${event.name}`;
+                    eventName.textContent = event.name.replace("?????", event.name.split(" - ")[1].replace("?????", event.details.split(" ")[0]));
+                    listItem.classList.remove("locked");
                 } else {
-                    listItem.textContent = `${timeText} - ?????`;
-                    listItem.classList.add("hidden");
+                    eventName.textContent = event.name;
+                    if (event.name.includes("?????")) {
+                        listItem.classList.add("locked");
+                    }
                 }
 
                 // 詳細表示のための要素
@@ -94,13 +134,18 @@
                 detailsDiv.classList.add("details");
                 detailsDiv.textContent = event.details;
 
-                // リストアイテムのクリックイベント
+                // 15分前まではロックされた項目は詳細を開けない
                 listItem.addEventListener("click", () => {
-                    detailsDiv.style.display = detailsDiv.style.display === "none" ? "block" : "none";
+                    if (!listItem.classList.contains("locked")) {
+                        detailsDiv.style.display = detailsDiv.style.display === "none" ? "block" : "none";
+                    }
                 });
 
+                // 要素をリストアイテムに追加
+                listItem.appendChild(timeContainer);
+                listItem.appendChild(eventName);
+                listItem.appendChild(detailsDiv);
                 scheduleElement.appendChild(listItem);
-                scheduleElement.appendChild(detailsDiv); // 詳細部分を追加
             });
         }
 
