@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>旅のしおり</title>
+    <title>1日目の旅のしおり</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,6 +11,7 @@
             color: #333;
             margin: 0;
             padding: 20px;
+            position: relative;
         }
         h1 {
             text-align: center;
@@ -77,16 +78,34 @@
             border-radius: 0 0 12px 12px;
             transition: max-height 0.5s ease-in-out;
         }
+        /* 2日目リンク */
+        .next-day {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #4a90e2;
+            border: 1px solid #4a90e2;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .next-day:hover {
+            background-color: #4a90e2;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
-    <h1>旅のしおり</h1>
+    <h1>1日目の旅のしおり</h1>
+    <a href="day2.html" class="next-day">2日目へ</a>
     <ul id="schedule">
         <!-- イベントが動的に追加されます -->
     </ul>
 
     <script>
-        // イベントのデータを定義（すべて2024年12月1日）
+        // イベントのデータを定義（1日目）
         const events = [
             { name: "出発", startTime: new Date("2024-12-01T12:00:00"), details: "空港へ向かいます。" },
             { name: "昼食 - ?????", startTime: new Date("2024-12-01T12:10:00"), details: "近くのレストランで昼食。" },
@@ -96,27 +115,23 @@
             { name: "夜の散策", startTime: new Date("2024-12-01T20:30:00"), details: "街を散策します。" }
         ];
 
-        // 日付を"HH:MM"形式にフォーマットする関数
         function formatTime(date) {
             return date.toTimeString().slice(0, 5);
         }
 
-        // スケジュールの表示更新
         function updateSchedule() {
             const scheduleElement = document.getElementById("schedule");
-            scheduleElement.innerHTML = ""; // 一度クリア
+            scheduleElement.innerHTML = "";
 
             events.forEach(event => {
                 const listItem = document.createElement("li");
                 const fifteenMinutesBefore = new Date(event.startTime.getTime() - 15 * 60 * 1000);
                 const timeText = formatTime(event.startTime);
 
-                // タイムアイコンと時間表示
                 const timeContainer = document.createElement("div");
                 timeContainer.classList.add("time");
                 timeContainer.innerHTML = `<span class="time-icon">⏰</span>${timeText}`;
 
-                // イベント名と????の表示
                 const eventName = document.createElement("div");
                 eventName.classList.add("event-name");
                 if (new Date() >= fifteenMinutesBefore) {
@@ -129,19 +144,16 @@
                     }
                 }
 
-                // 詳細表示のための要素
                 const detailsDiv = document.createElement("div");
                 detailsDiv.classList.add("details");
                 detailsDiv.textContent = event.details;
 
-                // 15分前まではロックされた項目は詳細を開けない
                 listItem.addEventListener("click", () => {
                     if (!listItem.classList.contains("locked")) {
                         detailsDiv.style.display = detailsDiv.style.display === "none" ? "block" : "none";
                     }
                 });
 
-                // 要素をリストアイテムに追加
                 listItem.appendChild(timeContainer);
                 listItem.appendChild(eventName);
                 listItem.appendChild(detailsDiv);
@@ -149,10 +161,7 @@
             });
         }
 
-        // 初回の表示
         updateSchedule();
-
-        // 1分ごとに表示を更新
         setInterval(updateSchedule, 60000);
     </script>
 </body>
