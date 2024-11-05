@@ -11,7 +11,6 @@
             color: #333;
             margin: 0;
             padding: 20px;
-            position: relative;
         }
         h1 {
             text-align: center;
@@ -80,29 +79,29 @@
         }
         /* 2日目リンク */
         .next-day {
-            position: absolute;
-            top: 20px;
-            right: 20px;
+            display: block;
+            text-align: center;
+            margin: 20px auto 0;
             text-decoration: none;
             font-weight: bold;
-            color: #4a90e2;
-            border: 1px solid #4a90e2;
-            padding: 8px 12px;
+            color: #fff;
+            background-color: #4a90e2;
+            padding: 12px 20px;
             border-radius: 5px;
+            width: 120px;
             transition: background-color 0.3s;
         }
         .next-day:hover {
-            background-color: #4a90e2;
-            color: #fff;
+            background-color: #357ABD;
         }
     </style>
 </head>
 <body>
     <h1>1日目の旅のしおり</h1>
-    <a href="day2.html" class="next-day">2日目へ</a>
     <ul id="schedule">
         <!-- イベントが動的に追加されます -->
     </ul>
+    <a href="day2.html" class="next-day">2日目へ</a>
 
     <script>
         // イベントのデータを定義（1日目）
