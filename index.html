@@ -3,116 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1日目の旅のしおり</title>
+    <title>旅のしおり</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: pink;
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
             color: #333;
             margin: 0;
             padding: 20px;
         }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+
         h1 {
             text-align: center;
-            color: #4a90e2;
-            font-size: 2em;
+            color: #0056b3;
+            font-size: 1.8em;
             margin-bottom: 20px;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+
+        .event {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
         }
-        li {
-            background-color: #ffffff;
-            margin: 15px 0;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            position: relative;
-        }
-        li.locked {
-            cursor: not-allowed;
-            color: #888;
-        }
-        li:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-        }
-        .time {
+
+        .event-time {
             font-weight: bold;
-            font-size: 1.2em;
-            color: #4a90e2;
+            color: #0056b3;
             margin-right: 10px;
-            display: flex;
-            align-items: center;
+            font-size: 1.1em;
+            min-width: 60px;
+            text-align: right;
         }
-        .time-icon {
-            background-color: #4a90e2;
-            color: #fff;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 8px;
-            font-size: 0.9em;
-        }
+
         .event-name {
             font-size: 1.1em;
+            color: #333;
+            cursor: pointer;
             flex-grow: 1;
         }
-        .hidden {
-            color: #aaa;
-        }
+
         .details {
             display: none;
-            margin-top: 15px;
-            padding: 15px;
-            border-left: 4px solid #4a90e2;
-            background-color: #f5f5f5;
-            border-radius: 0 0 12px 12px;
-            transition: max-height 0.5s ease-in-out;
-        }
-        /* 2日目リンク */
-        .next-day {
-            display: block;
-            text-align: center;
-            margin: 20px auto 0;
-            text-decoration: none;
-            font-weight: bold;
-            color: #fff;
-            background-color: #4a90e2;
-            padding: 12px 20px;
-            border-radius: 5px;
-            width: 120px;
-            transition: background-color 0.3s;
-        }
-        .next-day:hover {
-            background-color: #357ABD;
+            padding: 5px 0;
+            font-size: 0.9em;
+            color: #555;
+            border-left: 4px solid #0056b3;
+            margin-left: 70px;
         }
     </style>
 </head>
 <body>
-    <h1>1日目の旅のしおり</h1>
-    <ul id="schedule">
-        <!-- イベントが動的に追加されます -->
-    </ul>
-    <a href="day2.html" class="next-day">2日目へ</a>
+    <div class="container">
+        <h1>旅のしおり</h1>
+        <div id="schedule"></div>
+    </div>
 
     <script>
-        // イベントのデータを定義（1日目）
         const events = [
-            { name: "出発", startTime: new Date("2024-12-01T12:00:00"), details: "空港へ向かいます。" },
-            { name: "昼食 - ?????", startTime: new Date("2024-12-01T12:10:00"), details: "近くのレストランで昼食。" },
-            { name: "観光スポット訪問 - ?????", startTime: new Date("2024-12-01T15:00:00"), details: "有名な観光地を見学。" },
-            { name: "ホテルチェックイン", startTime: new Date("2024-12-01T16:00:00"), details: "ホテルにチェックインします。" },
-            { name: "夕食 - ?????", startTime: new Date("2024-12-01T19:00:00"), details: "地元の料理を楽しむ。" },
-            { name: "夜の散策", startTime: new Date("2024-12-01T20:30:00"), details: "街を散策します。" }
+            { name: "出発（空港へ向かう）", startTime: new Date("2024-12-01T08:00:00"), details: "空港へ向かいます。", icon: "✈️" },
+            { name: "昼食（レストラン）", startTime: new Date("2024-12-01T12:00:00"), details: "近くのレストランで昼食。", icon: "🍽️" },
+            { name: "観光スポット（????）", startTime: new Date("2024-12-01T15:00:00"), details: "有名な観光地を見学。", icon: "🏰" },
+            { name: "ホテルチェックイン（????）", startTime: new Date("2024-12-01T16:00:00"), details: "ホテルにチェックインします。", icon: "🏨" },
+            { name: "夕食（????の料理）", startTime: new Date("2024-12-01T19:00:00"), details: "地元の料理を楽しむ。", icon: "🍜" },
+            { name: "夜の散策（????）", startTime: new Date("2024-12-01T20:30:00"), details: "街を散策します。", icon: "🌃" }
         ];
+
+        function revealHiddenText(event) {
+            const fifteenMinutesBefore = new Date(event.startTime.getTime() - 15 * 60 * 1000);
+            if (new Date() >= fifteenMinutesBefore) {
+                return event.name.replace("????", () => {
+                    switch (event.name) {
+                        case "観光スポット（????）": return "有名な観光地";
+                        case "ホテルチェックイン（????）": return "宿泊先";
+                        case "夕食（????の料理）": return "地元";
+                        case "夜の散策（????）": return "街の中心部";
+                        default: return "????";
+                    }
+                });
+            } else {
+                return event.name;
+            }
+        }
 
         function formatTime(date) {
             return date.toTimeString().slice(0, 5);
@@ -123,40 +103,31 @@
             scheduleElement.innerHTML = "";
 
             events.forEach(event => {
-                const listItem = document.createElement("li");
-                const fifteenMinutesBefore = new Date(event.startTime.getTime() - 15 * 60 * 1000);
-                const timeText = formatTime(event.startTime);
+                const eventContainer = document.createElement("div");
+                eventContainer.className = "event";
 
-                const timeContainer = document.createElement("div");
-                timeContainer.classList.add("time");
-                timeContainer.innerHTML = `<span class="time-icon">⏰</span>${timeText}`;
+                const timeElement = document.createElement("span");
+                timeElement.className = "event-time";
+                timeElement.textContent = formatTime(event.startTime);
+                eventContainer.appendChild(timeElement);
 
-                const eventName = document.createElement("div");
-                eventName.classList.add("event-name");
-                if (new Date() >= fifteenMinutesBefore) {
-                    eventName.textContent = event.name.replace("?????", event.name.split(" - ")[1].replace("?????", event.details.split(" ")[0]));
-                    listItem.classList.remove("locked");
-                } else {
-                    eventName.textContent = event.name;
-                    if (event.name.includes("?????")) {
-                        listItem.classList.add("locked");
-                    }
-                }
+                const nameElement = document.createElement("span");
+                nameElement.className = "event-name";
+                nameElement.textContent = revealHiddenText(event);
+                eventContainer.appendChild(nameElement);
 
                 const detailsDiv = document.createElement("div");
-                detailsDiv.classList.add("details");
-                detailsDiv.textContent = event.details;
+                detailsDiv.className = "details";
+                detailsDiv.textContent = new Date() >= new Date(event.startTime.getTime() - 15 * 60 * 1000) ? event.details : "?????";
+                eventContainer.appendChild(detailsDiv);
 
-                listItem.addEventListener("click", () => {
-                    if (!listItem.classList.contains("locked")) {
+                nameElement.addEventListener("click", () => {
+                    if (detailsDiv.textContent !== "?????") {
                         detailsDiv.style.display = detailsDiv.style.display === "none" ? "block" : "none";
                     }
                 });
 
-                listItem.appendChild(timeContainer);
-                listItem.appendChild(eventName);
-                listItem.appendChild(detailsDiv);
-                scheduleElement.appendChild(listItem);
+                scheduleElement.appendChild(eventContainer);
             });
         }
 
