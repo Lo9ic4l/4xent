@@ -11,7 +11,6 @@
             color: #333;
             margin: 0;
             padding: 20px;
-            position: relative;
         }
         h1 {
             text-align: center;
@@ -80,20 +79,20 @@
         }
         /* 1日目リンク */
         .previous-day {
-            position: absolute;
-            top: 20px;
-            right: 20px;
+            display: block;
+            text-align: center;
+            margin: 20px auto 0;
             text-decoration: none;
             font-weight: bold;
-            color: #4a90e2;
-            border: 1px solid #4a90e2;
-            padding: 8px 12px;
+            color: #fff;
+            background-color: #4a90e2;
+            padding: 12px 20px;
             border-radius: 5px;
+            width: 120px;
             transition: background-color 0.3s;
         }
         .previous-day:hover {
-            background-color: #4a90e2;
-            color: #fff;
+            background-color: #357ABD;
         }
     </style>
 </head>
@@ -115,7 +114,54 @@
             { name: "ホテルでリラックス", startTime: new Date("2024-12-02T20:00:00"), details: "ホテルでのんびり過ごします。" }
         ];
 
-        // 前回と同じJavaScriptの内容
+        function formatTime(date) {
+            return date.toTimeString().slice(0, 5);
+        }
+
+        function updateSchedule() {
+            const scheduleElement = document.getElementById("schedule");
+            scheduleElement.innerHTML = "";
+
+            events.forEach(event => {
+                const listItem = document.createElement("li");
+                const fifteenMinutesBefore = new Date(event.startTime.getTime() - 15 * 60 * 1000);
+                const timeText = formatTime(event.startTime);
+
+                const timeContainer = document.createElement("div");
+                timeContainer.classList.add("time");
+                timeContainer.innerHTML = `<span class="time-icon">⏰</span>${timeText}`;
+
+                const eventName = document.createElement("div");
+                eventName.classList.add("event-name");
+                if (new Date() >= fifteenMinutesBefore) {
+                    eventName.textContent = event.name.replace("?????", event.name.split(" - ")[1].replace("?????", event.details.split(" ")[0]));
+                    listItem.classList.remove("locked");
+                } else {
+                    eventName.textContent = event.name;
+                    if (event.name.includes("?????")) {
+                        listItem.classList.add("locked");
+                    }
+                }
+
+                const detailsDiv = document.createElement("div");
+                detailsDiv.classList.add("details");
+                detailsDiv.textContent = event.details;
+
+                listItem.addEventListener("click", () => {
+                    if (!listItem.classList.contains("locked")) {
+                        detailsDiv.style.display = detailsDiv.style.display === "none" ? "block" : "none";
+                    }
+                });
+
+                listItem.appendChild(timeContainer);
+                listItem.appendChild(eventName);
+                listItem.appendChild(detailsDiv);
+                scheduleElement.appendChild(listItem);
+            });
+        }
+
+        updateSchedule();
+        setInterval(updateSchedule, 60000);
     </script>
 </body>
 </html>
