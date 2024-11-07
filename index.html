@@ -126,7 +126,7 @@
     <!-- モーダルウィンドウ -->
     <div id="infoModal" class="modal">
         <div class="modal-content">
-            <p>????でマスクされた予定は、15分前になると表示されます。</p>
+            <p>????で隠されている予定は、15分前になると表示されるよ。</p>
             <button class="close-btn" onclick="closeModal()">閉じる</button>
         </div>
     </div>
@@ -139,7 +139,8 @@
     <script>
         // イベントのデータ
         const events = [
-            { name: "row1", startTime: new Date("2024-12-01T99:99:99"), details: "detail", icon: "✈️" },
+            { name: "???でご飯食べます。よ", startTime: new Date("2024-11-07T22:30:00"), details: "これは予定の詳細です。", icon: "✈️" },
+            { name: "次の予定はこれです。", startTime: new Date("2024-11-07T22:30:00"), details: "次の予定の詳細です、。", icon: "✈️" }
         ];
 
         function revealHiddenText(event) {
@@ -147,7 +148,7 @@
             if (new Date() >= fifteenMinutesBefore) {
                 return event.name.replace("????", () => {
                     switch (event.name) {
-                        case "観光スポット（????）": return "有名な観光地";
+                        case "???でご飯食べます。よ": return "イオン";
                         case "ホテルチェックイン（????）": return "宿泊先";
                         case "夕食（????の料理）": return "地元";
                         case "夜の散策（????）": return "街の中心部";
