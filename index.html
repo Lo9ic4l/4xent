@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>test</title>
+    <title>旅のしおり</title>
     <style>
         body {
             font-family: "Noto Sans JP", sans-serif;
@@ -132,15 +132,19 @@
     </div>
 
     <div class="container">
-        <h1>test</h1>
+        <h1>★ひかちゃんのお誕生日旅★</h1>
         <div id="schedule"></div>
     </div>
 
     <script>
         // イベントのデータ
         const events = [
-            { name: "???でご飯食べます。よ", startTime: new Date("2024-11-07T22:30:00"), details: "これは予定の詳細です。", icon: "✈️" },
-            { name: "次の予定はこれです。", startTime: new Date("2024-11-07T22:30:00"), details: "次の予定の詳細です、。", icon: "✈️" }
+            { name: "出発", startTime: new Date("2024-12-16T10:00:00"), details: "これは予定の詳細です。", icon: "✈️" },
+            { name: "お昼ごはん", startTime: new Date("2024-12-16T12:00:00"), details: "次の予定の詳細です、。", icon: "✈️" },
+            { name: "Check In", startTime: new Date("2024-12-16T15:00:00"), details: "次の予定の詳細です、。", icon: "✈️" },            
+            { name: "お買い物します", startTime: new Date("2024-12-16T70:00:00"), details: "次の予定の詳細です、。", icon: "✈️" },
+            { name: "ホテルで夜ご飯たべるにょ", startTime: new Date("2024-12-16T19:30:00"), details: "次の予定の詳細です、。", icon: "✈️" },
+            { name: "夜景見に行くよう", startTime: new Date("2024-12-16T21:00:00"), details: "次の予定の詳細です、。", icon: "✈️" }
         ];
 
         function revealHiddenText(event) {
@@ -148,7 +152,7 @@
             if (new Date() >= fifteenMinutesBefore) {
                 return event.name.replace("????", () => {
                     switch (event.name) {
-                        case "???でご飯食べます。よ": return "イオン";
+                        case "????でご飯食べます。よ": return "イオン";
                         case "ホテルチェックイン（????）": return "宿泊先";
                         case "夕食（????の料理）": return "地元";
                         case "夜の散策（????）": return "街の中心部";
