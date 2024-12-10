@@ -132,18 +132,19 @@
     </div>
 
     <div class="container">
-        <h1>★ひかちゃんのお誕生日旅★</h1>
+        <h1>お誕生日旅の</h1>
+        <h1>しおり</h1>
         <div id="schedule"></div>
     </div>
 
     <script>
         // イベントのデータ
         const events = [
-            { name: "出発", startTime: new Date("2024-12-16T10:00:00"), details: "これは予定の詳細です。", icon: "✈️" },
-            { name: "お昼ごはん", startTime: new Date("2024-12-16T12:00:00"), details: "次の予定の詳細です、。", icon: "✈️" },
-            { name: "Check In", startTime: new Date("2024-12-16T15:00:00"), details: "次の予定の詳細です、。", icon: "✈️" },            
-            { name: "お買い物します", startTime: new Date("2024-12-16T70:00:00"), details: "次の予定の詳細です、。", icon: "✈️" },
-            { name: "ホテルで夜ご飯たべるにょ", startTime: new Date("2024-12-16T19:30:00"), details: "次の予定の詳細です、。", icon: "✈️" },
+            { name: "出発", startTime: new Date("2024-12-16T09:00:00"), details: "どこ行くかな～～", icon: "✈️" },
+            { name: "お昼ごはん", startTime: new Date("2024-12-16T11:30:00"), details: "ここまで来たらどこで食べるかわかるよね？", icon: "✈️" },            
+            { name: "????をお買い物します", startTime: new Date("2024-12-16T13:00:00"), details: "何買うかはお楽しみ！！！", icon: "✈️" },
+            { name: "????ホテルにCheck In", startTime: new Date("2024-12-16T15:00:00"), details: "次の予定の詳細です、。", icon: "✈️" },
+            { name: "ホテルで夜ご飯たべるにょ", startTime: new Date("2024-12-16T19:00:00"), details: "次の予定の詳細です、。", icon: "✈️" },
             { name: "夜景見に行くよう", startTime: new Date("2024-12-16T21:00:00"), details: "次の予定の詳細です、。", icon: "✈️" }
         ];
 
@@ -153,9 +154,8 @@
                 return event.name.replace("????", () => {
                     switch (event.name) {
                         case "????でご飯食べます。よ": return "イオン";
-                        case "ホテルチェックイン（????）": return "宿泊先";
-                        case "夕食（????の料理）": return "地元";
-                        case "夜の散策（????）": return "街の中心部";
+                        case "????をお買い物します": return "バスボムをお買い物します";
+                        case "????ホテルにCheck In": return "ラ・スイート神戸ホテルにCheck In";
                         default: return "????";
                     }
                 });
